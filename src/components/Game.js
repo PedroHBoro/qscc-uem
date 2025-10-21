@@ -12,8 +12,8 @@ export class Game {
     this.container = document.getElementById(containerId);
     this.protagonist = null;
     this.questionUI = null;
-    this.topZone = null;
-    this.bottomZone = null;
+    this.leftZone = null;
+    this.rightZone = null;
     this.questionManager = new QuestionManager();
     this.profileManager = new ProfileManager();
     this.questionAnswered = false;
@@ -34,10 +34,12 @@ export class Game {
 
     this.questionUI = new QuestionUI(this.app);
 
-    const zoneWidth = this.app.screen.width;
-    const zoneHeight = this.app.screen.height / 2;
-    this.topZone = new AnswerZone(this.app, 0, 0, zoneWidth, zoneHeight, '');
-    this.bottomZone = new AnswerZone(this.app, 0, zoneHeight, zoneWidth, zoneHeight, '');
+    const zoneWidth = this.app.screen.width / 2;
+    const zoneHeight = this.app.screen.height / 3;
+    const zoneTopOffset = this.app.screen.height / 3
+    
+    this.leftZone = new AnswerZone(this.app, 0, zoneTopOffset, zoneWidth, zoneHeight, '');
+    this.rightZone = new AnswerZone(this.app, zoneWidth, zoneTopOffset, zoneWidth, zoneHeight, '');
 
     this.displayCurrentQuestion();
 
@@ -53,9 +55,9 @@ export class Game {
       this.interactionTimeout = setTimeout(() => {
         if (this.questionAnswered) return;
 
-        if (this.topZone.contains(this.protagonist.sprite.position)) {
+        if (this.leftZone.contains(this.protagonist.sprite.position)) {
           this.handleAnswer(0);
-        } else if (this.bottomZone.contains(this.protagonist.sprite.position)) {
+        } else if (this.rightZone.contains(this.protagonist.sprite.position)) {
           this.handleAnswer(1);
         }
       }, 5000); // 5 seconds
@@ -69,11 +71,11 @@ export class Game {
   displayCurrentQuestion() {
     const question = this.questionManager.getCurrentQuestion();
     this.questionUI.displayQuestion(question.text);
-    this.topZone.text.text = question.choices[0];
-    this.bottomZone.text.text = question.choices[1];
+    this.leftZone.text.text = question.choices[0];
+    this.rightZone.text.text = question.choices[1];
 
     const startX = this.app.screen.width / 2;
-    const startY = this.app.screen.height / 2;
+    const startY = this.app.screen.height - (this.app.screen.height / 6);
     this.protagonist.setPosition(startX, startY);
     this.questionAnswered = false;
   }
@@ -89,10 +91,10 @@ export class Game {
     } else {
       const recommendation = this.profileManager.getRecommendation();
       this.questionUI.displayQuestion(`Curso recomendado: ${recommendation}`);
-      this.app.stage.removeChild(this.topZone.rect);
-      this.app.stage.removeChild(this.topZone.text);
-      this.app.stage.removeChild(this.bottomZone.rect);
-      this.app.stage.removeChild(this.bottomZone.text);
+      this.app.stage.removeChild(this.leftZone.rect);
+      this.app.stage.removeChild(this.leftZone.text);
+      this.app.stage.removeChild(this.rightZone.rect);
+      this.app.stage.removeChild(this.rightZone.text);
     }
   }
 }
