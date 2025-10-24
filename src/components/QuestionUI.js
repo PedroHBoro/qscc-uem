@@ -21,7 +21,7 @@ export class QuestionUI {
     }});
 
     this.text.anchor.set(0.5);
-    this.text.position.set(this.app.screen.width / 2, this.app.screen.height / 2);
+    this.text.position.set(this.app.screen.width / 2, this.app.screen.height / 6);
     this.app.stage.addChild(this.text);
   }
 }
