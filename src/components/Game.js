@@ -1,10 +1,11 @@
 
-import { Application } from 'pixi.js';
+import { Application, TilingSprite, Assets } from 'pixi.js';
 import { Protagonist } from './Protagonist.js';
 import { QuestionUI } from './QuestionUI.js';
 import { AnswerZone } from './AnswerZone.js';
 import { QuestionManager } from '../utils/QuestionManager.js';
 import { ProfileManager } from '../utils/ProfileManager.js';
+import { CountdownUI } from './CountdownUI.js';
 
 export class Game {
   constructor(containerId) {
@@ -18,21 +19,38 @@ export class Game {
     this.profileManager = new ProfileManager();
     this.questionAnswered = false;
     this.interactionTimeout = null;
+    this.countdownUI = null;
   }
 
   async init() {
     console.log('Game.init() called');
-    await this.app.init({ background: '#1099bb', resizeTo: window });
+    await this.app.init({ resizeTo: window });
     this.container.appendChild(this.app.canvas);
     this.setup();
   }
 
   async setup() {
     console.log('Game.setup() called');
+
+    const backgroundTexture = await Assets.load('/assets/bunny.png');
+    const background = new TilingSprite(
+      backgroundTexture,
+      this.app.screen.width,
+      this.app.screen.height,
+    );
+
+    this.app.stage.addChildAt(background, 0);
+
+    window.addEventListener('resize', () => {
+      background.width = this.app.screen.width;
+      background.height = this.app.screen.height;
+    });
+
     this.protagonist = new Protagonist(this.app);
     await this.protagonist.load();
 
     this.questionUI = new QuestionUI(this.app);
+    this.countdownUI = new CountdownUI(this.app);
 
     const zoneWidth = this.app.screen.width / 2;
     const zoneHeight = this.app.screen.height / 3;
@@ -45,22 +63,23 @@ export class Game {
 
     this.app.stage.interactive = true;
     this.app.stage.on('pointerdown', (event) => {
-      console.log('pointerdown event:', event);
       this.protagonist.moveTo(event.global.x, event.global.y);
 
-      if (this.interactionTimeout) {
-        clearTimeout(this.interactionTimeout);
+      const clickPoint = event.global;
+
+      if (this.leftZone.contains(clickPoint) || this.rightZone.contains(clickPoint)) {
+        this.countdownUI.start(5, () => {
+          if (this.questionAnswered) return;
+
+          if (this.leftZone.contains(this.protagonist.sprite.position)) {
+            this.handleAnswer(0);
+          } else if (this.rightZone.contains(this.protagonist.sprite.position)) {
+            this.handleAnswer(1);
+          }
+        });
+      } else {
+        this.countdownUI.stop();
       }
-
-      this.interactionTimeout = setTimeout(() => {
-        if (this.questionAnswered) return;
-
-        if (this.leftZone.contains(this.protagonist.sprite.position)) {
-          this.handleAnswer(0);
-        } else if (this.rightZone.contains(this.protagonist.sprite.position)) {
-          this.handleAnswer(1);
-        }
-      }, 5000); // 5 seconds
     });
 
     this.app.ticker.add((time) => {
@@ -81,6 +100,7 @@ export class Game {
   }
 
   handleAnswer(choiceIndex) {
+    this.countdownUI.stop();
     this.questionAnswered = true;
     const question = this.questionManager.getCurrentQuestion();
     const score = question.scores[choiceIndex];
