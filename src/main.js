@@ -11,7 +11,6 @@ window.onload = () => {
     if (form) {
       form.remove();
     }
-    console.log('Initializing game...');
     const game = new Game('pixi-container');
     game.init();
   }

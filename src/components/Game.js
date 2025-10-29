@@ -23,14 +23,12 @@ export class Game {
   }
 
   async init() {
-    console.log('Game.init() called');
     await this.app.init({ resizeTo: window });
     this.container.appendChild(this.app.canvas);
     this.setup();
   }
 
   async setup() {
-    console.log('Game.setup() called');
 
     const backgroundTexture = await Assets.load('/assets/bunny.png');
     const background = new TilingSprite(
@@ -67,7 +65,7 @@ export class Game {
 
       const clickPoint = event.global;
 
-      if (this.leftZone.contains(clickPoint) || this.rightZone.contains(clickPoint)) {
+      if (this.leftZone?.contains(clickPoint) || this.rightZone?.contains(clickPoint)) {
         this.countdownUI.start(5, () => {
           if (this.questionAnswered) return;
 
@@ -115,6 +113,9 @@ export class Game {
       this.app.stage.removeChild(this.leftZone.text);
       this.app.stage.removeChild(this.rightZone.rect);
       this.app.stage.removeChild(this.rightZone.text);
+
+      delete this.leftZone
+      delete this.rightZone
     }
   }
 }
