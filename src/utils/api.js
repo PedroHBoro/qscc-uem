@@ -1,5 +1,4 @@
-
-export async function saveData(data) {
+export async function savePlayerData(data) {
   try {
     const response = await fetch('/api/saveData', {
       method: 'POST',
@@ -10,18 +9,11 @@ export async function saveData(data) {
     });
 
     if (!response.ok) {
-      // Se a resposta do servidor não for de sucesso, lança um erro
-      const errorResult = await response.json();
-      throw new Error(errorResult.message || 'Failed to save data');
+      throw new Error('Failed to save player data');
     }
 
-    const result = await response.json();
-    console.log('API response:', result.message);
-    return result;
-
+    console.log('Player data saved successfully');
   } catch (error) {
-    console.error('Error calling saveData API:', error);
-    // Re-lança o erro para que o código que chamou a função possa tratá-lo
-    throw error;
+    console.error('Error saving player data:', error);
   }
 }
