@@ -9,7 +9,6 @@ export class Protagonist {
   }
 
   async load() {
-    console.log('Protagonist.load() called');
     const texture = await Assets.load('/assets/bunny.png');
     this.sprite = new Sprite(texture);
     this.sprite.anchor.set(0.5);
