@@ -14,7 +14,7 @@ export class AnswerZone {
       fill: 0xffffff,
       align: 'center',
       wordWrap: true,
-      wordWrapWidth: this.app.screen.width / 4
+      wordWrapWidth: this.app.screen.width - 20
     }});
     this.text.anchor.set(0.5);
     this.text.position.set(x + width / 2, y + height / 2);

@@ -17,7 +17,7 @@ export class QuestionUI {
       fill: 0xffffff,
       align: 'center',
       wordWrap: true,
-      wordWrapWidth: this.app.screen.width - 40,
+      wordWrapWidth: this.app.screen.width - 20,
     }});
 
     this.text.anchor.set(0.5);
