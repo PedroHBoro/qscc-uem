@@ -43,6 +43,23 @@ export default function PlayerForm({ onFormSubmit }) {
         border: none;
         border-radius: 5px;
       }
+      #player-form button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+      .consent-container {
+        display: flex;
+        align-items: center;
+        text-align: left;
+        margin-bottom: 1rem;
+      }
+      .consent-container input {
+        width: auto;
+        margin-right: 0.5rem;
+      }
+      .consent-container label {
+        font-size: 0.9rem;
+      }
     </style>
     <h2>Preencha seus dados</h2>
     <div>
@@ -65,15 +82,40 @@ export default function PlayerForm({ onFormSubmit }) {
       <label for="player-age">Idade:</label>
       <input type="number" id="player-age" required>
     </div>
-    <button type="submit">Continuar</button>
+    <div class="consent-container">
+      <input type="checkbox" id="consent-checkbox" required>
+      <label for="consent-checkbox">Li e concedo meu consentimento de forma livre e esclarecida ao uso dos meus dados pessoais de acordo com o <a href="terms.html" target="_blank">termo de uso de dados</a></label>
+    </div>
+    <button type="submit" id="submit-button" disabled>Continuar</button>
   `;
+
+  const submitButton = form.querySelector('#submit-button');
+  const nameInput = form.querySelector('#player-name');
+  const schoolInput = form.querySelector('#player-school');
+  const ageInput = form.querySelector('#player-age');
+  const consentCheckbox = form.querySelector('#consent-checkbox');
+
+  const inputs = [nameInput, schoolInput, ageInput, consentCheckbox];
+
+  const validateForm = () => {
+    const isNameValid = nameInput.value.trim() !== '';
+    const isSchoolValid = schoolInput.value.trim() !== '';
+    const isAgeValid = ageInput.value.trim() !== '';
+    const isConsentChecked = consentCheckbox.checked;
+
+    submitButton.disabled = !(isNameValid && isSchoolValid && isAgeValid && isConsentChecked);
+  };
+
+  inputs.forEach(input => {
+    input.addEventListener('input', validateForm);
+  });
 
   form.addEventListener('submit', (event) => {
     event.preventDefault();
-    const name = form.querySelector('#player-name').value;
+    const name = nameInput.value;
     const gender = form.querySelector('#player-gender').value;
-    const school = form.querySelector('#player-school').value;
-    const age = form.querySelector('#player-age').value;
+    const school = schoolInput.value;
+    const age = ageInput.value;
     onFormSubmit({ name, gender, school, age });
   });
 
