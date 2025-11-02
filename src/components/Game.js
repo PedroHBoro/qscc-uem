@@ -77,9 +77,9 @@ export class Game {
         this.countdownUI.start(5, () => {
           if (this.questionAnswered) return;
 
-          if (this.topZone.contains(this.protagonist.sprite.position)) {
+          if (this.topZone?.contains(this.protagonist.staticSprite.position)) {
             this.handleAnswer(0);
-          } else if (this.bottomZone.contains(this.protagonist.sprite.position)) {
+          } else if (this.bottomZone?.contains(this.protagonist.staticSprite.position)) {
             this.handleAnswer(1);
           }
         });
