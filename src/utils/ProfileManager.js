@@ -4,6 +4,17 @@ export class ProfileManager {
       softwareEngineering: 0,
       computerScience: 0,
     };
+    this.playerProfile = this.getProfile();
+  }
+
+  saveProfile(playerData) {
+    localStorage.setItem('playerProfile', JSON.stringify(playerData));
+    this.playerProfile = playerData;
+  }
+
+  getProfile() {
+    const profile = localStorage.getItem('playerProfile');
+    return profile ? JSON.parse(profile) : null;
   }
 
   addPoints(course, points) {

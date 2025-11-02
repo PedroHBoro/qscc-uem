@@ -1,27 +1,56 @@
-import { Text } from 'pixi.js';
+import { Graphics, Text, Container } from 'pixi.js';
 
 export class QuestionUI {
   constructor(app) {
     this.app = app;
-    this.text = null;
+    this.container = new Container();
+    this.container.visible = false;
+    this.app.stage.addChild(this.container);
   }
 
   displayQuestion(questionText) {
-    if (this.text) {
-      this.app.stage.removeChild(this.text);
-    }
+    this.container.removeChildren();
 
-    this.text = new Text({text: questionText, style: {
-      fontFamily: 'Arial',
-      fontSize: 24,
-      fill: 0xffffff,
-      align: 'center',
-      wordWrap: true,
-      wordWrapWidth: this.app.screen.width - 40,
-    }});
+    const bubblePadding = 20;
+    const bubbleWidth = this.app.screen.width * 0.6;
+    const bubbleX = 100;
+    const bubbleY = 30;
 
-    this.text.anchor.set(0.5);
-    this.text.position.set(this.app.screen.width / 2, this.app.screen.height / 6);
-    this.app.stage.addChild(this.text);
+    const question = new Text({
+        text: questionText,
+        style: {
+            fontFamily: 'Arial',
+            fontSize: 20,
+            fill: 0x000000,
+            align: 'left',
+            wordWrap: true,
+            wordWrapWidth: bubbleWidth - (bubblePadding * 2),
+            lineHeight: 25
+        }
+    });
+    question.position.set(bubblePadding, bubblePadding);
+
+    const bubbleHeight = question.height + (bubblePadding * 2);
+
+    const bubble = new Graphics();
+    bubble.beginFill(0xFFFFFF);
+    bubble.drawRoundedRect(0, 0, bubbleWidth, bubbleHeight, 15);
+    bubble.endFill();
+
+    const tail = new Graphics();
+    tail.beginFill(0xFFFFFF);
+    tail.moveTo(0, 25);
+    tail.lineTo(-20, 40);
+    tail.lineTo(0, 55);
+    tail.closePath();
+    tail.endFill();
+
+    this.container.addChild(bubble, question, tail);
+    this.container.position.set(bubbleX, bubbleY);
+    this.container.visible = true;
+  }
+
+  hide() {
+    this.container.visible = false;
   }
 }

@@ -1,0 +1,16 @@
+{
+    "frames": {
+        "ground1.png": {
+            "frame": {"x":32,"y":0,"w":64,"h":64},
+            "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+            "sourceSize": {"w":64,"h":64},
+            "anchor": {"x":0,"y":0}
+        }
+    },
+    "meta": {
+        "image": "tileset.png",
+        "format": "RGBA8888",
+        "size": {"w": 160, "h": 128},
+        "scale": 1
+    }
+}
