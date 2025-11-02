@@ -1,0 +1,17 @@
+{
+  "frames": {
+    "female_walk_1": { "frame": { "x": 0, "y": 0, "w": 228, "h": 228 } },
+    "female_walk_2": { "frame": { "x": 228, "y": 0, "w": 228, "h": 228 } },
+    "female_walk_3": { "frame": { "x": 0, "y": 228, "w": 228, "h": 228 } },
+    "female_walk_4": { "frame": { "x": 228, "y": 228, "w": 228, "h": 228 } }
+  },
+  "animations": {
+    "female_walk": ["female_walk_1", "female_walk_2", "female_walk_3", "female_walk_4"]
+  },
+  "meta": {
+    "image": "female_moving_frames.png",
+    "format": "RGBA8888",
+    "size": { "w": 64, "h": 64 },
+    "scale": "1"
+  }
+}
