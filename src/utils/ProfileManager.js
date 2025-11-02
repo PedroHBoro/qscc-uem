@@ -4,7 +4,7 @@ export class ProfileManager {
       softwareEngineering: 0,
       computerScience: 0,
     };
-    this.playerProfile = this.getProfile(); // Carrega o perfil ao iniciar
+    this.playerProfile = this.getProfile();
   }
 
   saveProfile(playerData) {
@@ -33,4 +33,3 @@ export class ProfileManager {
     }
   }
 }
-

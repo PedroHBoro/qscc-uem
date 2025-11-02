@@ -29,18 +29,15 @@ export class Protagonist {
       animationName = isFemale ? 'female_walk' : 'male_walk';
     }
 
-    // Load both the static texture and the spritesheet
     const loadedAssets = await Assets.load([staticAsset, animatedAsset]);
     const staticTexture = loadedAssets[staticAsset];
     const sheet = loadedAssets[animatedAsset];
 
-    // Create static sprite
     this.staticSprite = new Sprite(staticTexture);
     this.staticSprite.anchor.set(0.5);
     this.staticSprite.scale.set(0.3);
     this.app.stage.addChild(this.staticSprite);
 
-    // Create animated sprite from the loaded spritesheet
     this.animatedSprite = new AnimatedSprite(sheet.animations[animationName]);
     this.animatedSprite.anchor.set(0.5);
     this.animatedSprite.scale.set(0.3);
@@ -67,18 +64,16 @@ export class Protagonist {
   }
 
   update(time) {
-    const speed = 5; // A pixel-based speed
+    const speed = 5;
     const dx = this.targetX - this.staticSprite.position.x;
     const dy = this.targetY - this.staticSprite.position.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
 
     if (distance < speed * time.deltaTime) {
-      // Snap to target and stop moving
       this.staticSprite.position.set(this.targetX, this.targetY);
       this.animatedSprite.position.set(this.targetX, this.targetY);
       this.isMoving = false;
     } else {
-      // Move towards target
       const angle = Math.atan2(dy, dx);
       const moveX = Math.cos(angle) * speed * time.deltaTime;
       const moveY = Math.sin(angle) * speed * time.deltaTime;
@@ -90,7 +85,6 @@ export class Protagonist {
       this.isMoving = true;
     }
 
-    // Update visibility based on movement state
     this.animatedSprite.visible = this.isMoving;
     this.staticSprite.visible = !this.isMoving;
   }

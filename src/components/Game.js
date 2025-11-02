@@ -113,7 +113,7 @@ export class Game {
     this.profileManager.addPoints(score, 1);
 
     if (this.questionManager.nextQuestion()) {
-      setTimeout(() => this.displayCurrentQuestion(), 500); // Wait half a second
+      setTimeout(() => this.displayCurrentQuestion(), 500);
     } else {
       const recommendation = this.profileManager.getRecommendation();
       this.questionUI.displayQuestion(`Baseado nas suas preferências, eu lhe recomendaria o curso ${recommendation}!`);

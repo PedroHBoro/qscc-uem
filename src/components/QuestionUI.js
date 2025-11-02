@@ -9,7 +9,6 @@ export class QuestionUI {
   }
 
   displayQuestion(questionText) {
-    // Clear previous contents
     this.container.removeChildren();
 
     const bubblePadding = 20;
@@ -17,13 +16,12 @@ export class QuestionUI {
     const bubbleX = 100;
     const bubbleY = 30;
 
-    // Create the text
     const question = new Text({
         text: questionText,
         style: {
             fontFamily: 'Arial',
             fontSize: 20,
-            fill: 0x000000, // Black text
+            fill: 0x000000,
             align: 'left',
             wordWrap: true,
             wordWrapWidth: bubbleWidth - (bubblePadding * 2),
@@ -34,13 +32,11 @@ export class QuestionUI {
 
     const bubbleHeight = question.height + (bubblePadding * 2);
 
-    // Create the speech bubble graphics
     const bubble = new Graphics();
-    bubble.beginFill(0xFFFFFF); // White bubble
+    bubble.beginFill(0xFFFFFF);
     bubble.drawRoundedRect(0, 0, bubbleWidth, bubbleHeight, 15);
     bubble.endFill();
 
-    // Create the tail of the bubble
     const tail = new Graphics();
     tail.beginFill(0xFFFFFF);
     tail.moveTo(0, 25);
@@ -49,7 +45,6 @@ export class QuestionUI {
     tail.closePath();
     tail.endFill();
 
-    // Add bubble, text, and tail to the container
     this.container.addChild(bubble, question, tail);
     this.container.position.set(bubbleX, bubbleY);
     this.container.visible = true;

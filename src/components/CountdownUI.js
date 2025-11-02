@@ -1,4 +1,3 @@
-
 import { Text } from 'pixi.js';
 
 export class CountdownUI {
@@ -23,7 +22,7 @@ export class CountdownUI {
   }
 
   start(seconds, onComplete) {
-    this.stop(); // Garante que qualquer contagem anterior seja interrompida
+    this.stop();
 
     let remaining = seconds;
     this.text.text = remaining;
