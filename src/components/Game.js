@@ -1,5 +1,5 @@
 
-import { Application, TilingSprite, Assets } from 'pixi.js';
+import { Application, TilingSprite, Assets, Texture } from 'pixi.js';
 import { Protagonist } from './Protagonist.js';
 import { QuestionUI } from './QuestionUI.js';
 import { AnswerZone } from './AnswerZone.js';
@@ -30,7 +30,8 @@ export class Game {
 
   async setup() {
 
-    const backgroundTexture = await Assets.load('/assets/bunny.png');
+    await Assets.load('/assets/Spritesheet.json');
+    const backgroundTexture = Texture.from('ground1.png');
     const background = new TilingSprite(
       backgroundTexture,
       this.app.screen.width,
