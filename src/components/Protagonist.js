@@ -1,17 +1,28 @@
 import { Assets, Sprite } from 'pixi.js';
 
 export class Protagonist {
-  constructor(app) {
+  constructor(app, gender) {
     this.app = app;
+    this.gender = gender;
     this.sprite = null;
     this.targetX = 0;
     this.targetY = 0;
   }
 
   async load() {
-    const texture = await Assets.load('/assets/bunny.png');
+    let texturePath;
+    if (this.gender === 'feminino') {
+      texturePath = '/assets/female.png';
+    } else if (this.gender === 'masculino') {
+      texturePath = '/assets/male.png';
+    } else {
+      texturePath = Math.random() < 0.5 ? '/assets/female.png' : '/assets/male.png';
+    }
+
+    const texture = await Assets.load(texturePath);
     this.sprite = new Sprite(texture);
     this.sprite.anchor.set(0.5);
+    this.sprite.scale.set(0.3);
     this.app.stage.addChild(this.sprite);
     this.targetX = this.sprite.position.x;
     this.targetY = this.sprite.position.y;

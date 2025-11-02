@@ -44,7 +44,10 @@ export class Game {
       background.height = this.app.screen.height;
     });
 
-    this.protagonist = new Protagonist(this.app);
+    const profile = this.profileManager.getProfile();
+    const gender = profile ? profile.gender : 'outro';
+
+    this.protagonist = new Protagonist(this.app, gender);
     await this.protagonist.load();
 
     this.questionUI = new QuestionUI(this.app);

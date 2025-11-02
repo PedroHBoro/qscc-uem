@@ -2,9 +2,11 @@ import MainMenu from './components/MainMenu.js';
 import { Game } from './components/Game.js';
 import PlayerForm from './components/PlayerForm.js';
 import { savePlayerData } from './utils/api.js';
+import { ProfileManager } from './utils/ProfileManager.js';
 
 window.onload = () => {
   const appContainer = document.getElementById('app');
+  const profileManager = new ProfileManager();
 
   function startGame() {
     const form = document.getElementById('player-form');
@@ -16,6 +18,7 @@ window.onload = () => {
   }
 
   async function handleFormSubmit(playerData) {
+    profileManager.saveProfile(playerData);
     await savePlayerData(playerData);
     startGame();
   }
