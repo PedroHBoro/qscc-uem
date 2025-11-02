@@ -15,6 +15,8 @@ body {
 }
 
 .terms-container {
+    background-color: #fff;
+    color: #000;
     display: flex;
     flex-direction: column;
     justify-content: center;

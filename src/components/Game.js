@@ -1,5 +1,4 @@
-
-import { Application, TilingSprite, Assets, Texture } from 'pixi.js';
+import { Application, TilingSprite, Assets, Texture, Sprite } from 'pixi.js';
 import { Protagonist } from './Protagonist.js';
 import { QuestionUI } from './QuestionUI.js';
 import { AnswerZone } from './AnswerZone.js';
@@ -30,7 +29,7 @@ export class Game {
 
   async setup() {
 
-    await Assets.load('/assets/Spritesheet.json');
+    await Assets.load(['/assets/Spritesheet.json', '/assets/mago.png']);
     const backgroundTexture = Texture.from('ground1.png');
     const background = new TilingSprite(
       backgroundTexture,
@@ -39,6 +38,11 @@ export class Game {
     );
 
     this.app.stage.addChildAt(background, 0);
+
+    const wizard = Sprite.from('/assets/mago.png');
+    wizard.scale.set(0.3);
+    wizard.position.set(15, 30);
+    this.app.stage.addChild(wizard);
 
     window.addEventListener('resize', () => {
       background.width = this.app.screen.width;
@@ -112,7 +116,7 @@ export class Game {
       setTimeout(() => this.displayCurrentQuestion(), 500); // Wait half a second
     } else {
       const recommendation = this.profileManager.getRecommendation();
-      this.questionUI.displayQuestion(`Curso recomendado: ${recommendation}`);
+      this.questionUI.displayQuestion(`Baseado nas suas preferências, eu lhe recomendaria o curso ${recommendation}!`);
       this.app.stage.removeChild(this.topZone.rect);
       this.app.stage.removeChild(this.topZone.text);
       this.app.stage.removeChild(this.bottomZone.rect);
