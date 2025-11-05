@@ -126,7 +126,7 @@ export class Game {
           } else if (recommendation === 'Engenharia de Software') {
             window.location.href = '/es.html';
           }
-        }, 2000);
+        }, 5000);
       }
     }
   }
