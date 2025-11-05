@@ -117,13 +117,17 @@ export class Game {
     } else {
       const recommendation = this.profileManager.getRecommendation();
       this.questionUI.displayQuestion(`Baseado nas suas preferências, eu lhe recomendaria o curso ${recommendation}!`);
-      this.app.stage.removeChild(this.topZone.rect);
       this.app.stage.removeChild(this.topZone.text);
-      this.app.stage.removeChild(this.bottomZone.rect);
       this.app.stage.removeChild(this.bottomZone.text);
-
-      delete this.topZone
-      delete this.bottomZone
+      if (recommendation === 'Ciência da Computação' || recommendation === 'Engenharia de Software') {
+        setTimeout(() => {
+          if (recommendation === 'Ciência da Computação') {
+            window.location.href = '/cc.html';
+          } else if (recommendation === 'Engenharia de Software') {
+            window.location.href = '/es.html';
+          }
+        }, 2000);
+      }
     }
   }
 }
