@@ -32,6 +32,7 @@ export default function MainMenu({ onStartGame }) {
     <p>O conteúdo é puramente para entretenimento e não deve ser levado como uma avaliação séria da sua personalidade ou aptidão, ok?</p>
     <p>Agora sim, divirta-se!</p>
     <button id="start-game">Entendi!</button>
+    <p>O conteúdo a seguir foi feito para a disciplina de Informática e Sociedade</p>
   `;
 
   menu.querySelector('#start-game').addEventListener('click', onStartGame);
