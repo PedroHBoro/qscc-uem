@@ -5,7 +5,10 @@ export async function savePlayerData(data) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        ...data,
+        timestamp: new Date().toLocaleString()
+      }),
     });
 
     if (!response.ok) {
