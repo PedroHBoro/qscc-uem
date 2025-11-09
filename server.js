@@ -20,7 +20,7 @@ app.post('/api/saveData', async (req, res) => {
 
     const data = req.body;
     const spreadsheetId = process.env.SPREADSHEET_ID;
-    const sheetName = 'Respostas';
+    const sheetName = req?.query?.sheet || "Error";
 
     if (!data || !spreadsheetId) {
       return res.status(400).send({ message: 'Missing data or spreadsheet ID.' });

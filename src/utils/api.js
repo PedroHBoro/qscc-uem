@@ -1,6 +1,6 @@
-export async function savePlayerData(data) {
+export async function savePlayerData(data, sheet) {
   try {
-    const response = await fetch('/api/saveData', {
+    const response = await fetch(`/api/saveData?sheet=${sheet}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

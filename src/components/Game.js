@@ -5,6 +5,7 @@ import { AnswerZone } from './AnswerZone.js';
 import { QuestionManager } from '../utils/QuestionManager.js';
 import { ProfileManager } from '../utils/ProfileManager.js';
 import { CountdownUI } from './CountdownUI.js';
+import { savePlayerData } from '../utils/api.js'
 
 export class Game {
   constructor(containerId) {
@@ -132,8 +133,8 @@ export class Game {
       this.bottomZone = null
 
       if (recommendation === 'Ciência da Computação' || recommendation === 'Engenharia de Software') {
-
-        this.countdownUI.start(5, () => {
+        savePlayerData({...this.profileManager.getProfile(), result: recommendation}, 'Resultados')
+        this.countdownUI.start(10, () => {
           if (recommendation === 'Ciência da Computação') {
             window.location.href = '/cc.html';
           } else if (recommendation === 'Engenharia de Software') {
