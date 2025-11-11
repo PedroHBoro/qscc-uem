@@ -28,10 +28,10 @@ export default function MainMenu({ onStartGame }) {
     <h3>Ei, antes de começar! 🎮  </h3>
     <p>Este jogo foi criado com um objetivo principal: divertir e informar você!</p>
     <p>Vamos explorar algumas nuances e características dos cursos, mas lembre-se:</p>
-    <p><strong>Isto NÃO é um teste comportamental ou psicológico.</strong></p>
+    <p><strong>Isto NÃO é um teste comportamental ou vocacional.</strong></p>
     <p>O conteúdo é puramente para entretenimento e não deve ser levado como uma avaliação séria da sua personalidade ou aptidão, ok?</p>
     <p>Agora sim, divirta-se!</p>
-    <button id="start-game">Entendi!</button>
+    <button id="start-game"></button>
     <p>O conteúdo a seguir foi feito para a disciplina de Informática e Sociedade</p>
   `;
 

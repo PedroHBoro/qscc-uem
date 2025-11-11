@@ -15,7 +15,7 @@ export default async function handler(request, response) {
 
     const data = request.body;
     const spreadsheetId = process.env.SPREADSHEET_ID;
-    const sheetName = 'Respostas';
+    const sheetName = request?.query?.sheet || "Error";
 
     if (!data || !spreadsheetId) {
       return response.status(400).send({ message: 'Missing data or spreadsheet ID.' });

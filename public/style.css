@@ -14,6 +14,43 @@ body {
     align-items: center;
 }
 
+#app button {
+    background-color: transparent !important;
+    background-image: url('/assets/continuar.png');
+    background-size: 120% auto;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    padding: 1rem;
+    width: 150px;
+    height: 60px;
+    user-select: none;
+}
+
+#app button:disabled {
+    opacity: 50%;
+}
+
+#start-screen {
+    width: 100dvw;
+    height: 100dvh;
+    background-image: url('/assets/start-menu.jpeg');
+    background-size: auto 80%;
+    background-repeat: no-repeat; 
+    background-position: center;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+@media (min-width: 768px) {
+    #start-screen {
+        background-size: auto 100%;
+    }
+}
+
 .terms-container {
     background-color: #fff;
     color: #000;
@@ -21,8 +58,12 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min=height: 100vh;
+    min-height: 100vh;
     padding: 20px;
     box-sizing: border-box;
-    text-align: center;
+    text-align: left;
+}
+
+.terms-container h1 {
+    text-align: center !important;
 }

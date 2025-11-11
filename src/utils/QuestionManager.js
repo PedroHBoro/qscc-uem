@@ -2,6 +2,14 @@ export class QuestionManager {
   constructor() {
     this.questions = [
       {
+        text: 'Toque onde você quer que o personagem vá e veja a magia acontecer!',
+        choices: [
+          'Entendi!', 
+          'Vamos lá!'
+        ],
+        scores: ['', ''],
+      },
+      {
         text: '1. Como você imagina sua rotina ideal na universidade?',
         choices: [
           'Uma rotina mais flexível, com as aulas concentradas à noite, permitindo que você tenha o dia livre para um estágio, trabalho ou projetos pessoais.', 

@@ -5,6 +5,7 @@ import { AnswerZone } from './AnswerZone.js';
 import { QuestionManager } from '../utils/QuestionManager.js';
 import { ProfileManager } from '../utils/ProfileManager.js';
 import { CountdownUI } from './CountdownUI.js';
+import { savePlayerData } from '../utils/api.js'
 
 export class Game {
   constructor(containerId) {
@@ -25,6 +26,9 @@ export class Game {
     await this.app.init({ resizeTo: window });
     this.container.appendChild(this.app.canvas);
     this.setup();
+
+    this.protagonistStartX = this.app.screen.width / 2;
+    this.protagonistStartY = this.app.screen.height - (this.app.screen.height / 6);
   }
 
   async setup() {
@@ -54,6 +58,7 @@ export class Game {
 
     this.protagonist = new Protagonist(this.app, gender);
     await this.protagonist.load();
+    this.protagonist.setPosition(this.protagonistStartX, this.protagonistStartY)
 
     this.questionUI = new QuestionUI(this.app);
     this.countdownUI = new CountdownUI(this.app);
@@ -61,9 +66,10 @@ export class Game {
     const zoneWidth = this.app.screen.width;
     const zoneHeight = this.app.screen.height / 4;
     const zoneTopOffset = this.app.screen.height / 4
+    const answareSpacing = 20
     
     this.topZone = new AnswerZone(this.app, 0, zoneTopOffset, zoneWidth, zoneHeight, '');
-    this.bottomZone = new AnswerZone(this.app, 0, zoneTopOffset + zoneHeight, zoneWidth, zoneHeight, '');
+    this.bottomZone = new AnswerZone(this.app, 0, zoneTopOffset + zoneHeight + answareSpacing, zoneWidth, zoneHeight, '');
 
     this.displayCurrentQuestion();
 
@@ -83,7 +89,7 @@ export class Game {
             this.handleAnswer(1);
           }
         });
-      } else {
+      } else if (this.topZone || this.bottomZone) {
         this.countdownUI.stop();
       }
     });
@@ -99,9 +105,7 @@ export class Game {
     this.topZone.text.text = question.choices[0];
     this.bottomZone.text.text = question.choices[1];
 
-    const startX = this.app.screen.width / 2;
-    const startY = this.app.screen.height - (this.app.screen.height / 6);
-    this.protagonist.setPosition(startX, startY);
+    this.protagonist.moveTo(this.protagonistStartX, this.protagonistStartY);
     this.questionAnswered = false;
   }
 
@@ -116,17 +120,27 @@ export class Game {
       setTimeout(() => this.displayCurrentQuestion(), 500);
     } else {
       const recommendation = this.profileManager.getRecommendation();
-      this.questionUI.displayQuestion(`Baseado nas suas preferências, eu lhe recomendaria o curso ${recommendation}!`);
+      this.questionUI.displayQuestion(
+        `Baseado nas suas preferências, eu lhe recomendaria o curso ${recommendation}! \nVocê será redirecionado a uma página que conta um pouco mais sobre esta recomendação em:`
+      );
+      
+      this.app.stage.removeChild(this.topZone.rect);
       this.app.stage.removeChild(this.topZone.text);
+      this.topZone = null
+      
+      this.app.stage.removeChild(this.bottomZone.rect);
       this.app.stage.removeChild(this.bottomZone.text);
+      this.bottomZone = null
+
       if (recommendation === 'Ciência da Computação' || recommendation === 'Engenharia de Software') {
-        setTimeout(() => {
+        savePlayerData({...this.profileManager.getProfile(), result: recommendation}, 'Resultados')
+        this.countdownUI.start(10, () => {
           if (recommendation === 'Ciência da Computação') {
             window.location.href = '/cc.html';
           } else if (recommendation === 'Engenharia de Software') {
             window.location.href = '/es.html';
           }
-        }, 5000);
+        });
       }
     }
   }

@@ -19,7 +19,7 @@ window.onload = () => {
 
   async function handleFormSubmit(playerData) {
     profileManager.saveProfile(playerData);
-    await savePlayerData(playerData);
+    await savePlayerData(playerData, 'Respostas');
     startGame();
   }
 
@@ -32,6 +32,20 @@ window.onload = () => {
     appContainer.appendChild(playerForm);
   }
 
-  const mainMenu = MainMenu({ onStartGame: showPlayerForm });
-  appContainer.appendChild(mainMenu);
+  function showMainMenu() {
+    const mainMenu = MainMenu({ onStartGame: showPlayerForm });
+    appContainer.appendChild(mainMenu);
+  }
+
+  function showStartScreen() {
+    const startScreen = document.createElement('div');
+    startScreen.id = 'start-screen';
+    startScreen.addEventListener('click', () => {
+      startScreen.remove();
+      showMainMenu();
+    }, { once: true }); // Ensure the event listener is removed after it's fired
+    appContainer.appendChild(startScreen);
+  }
+
+  showStartScreen();
 };
