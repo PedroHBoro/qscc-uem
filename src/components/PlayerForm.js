@@ -10,11 +10,6 @@ export default function PlayerForm({ onFormSubmit }) {
         transform: translate(-50%, -50%);
         text-align: center;
         font-family: sans-serif;
-        background: white;
-        padding: 2rem;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        color: black;
       }
       #player-form h2 {
         margin-bottom: 1rem;
@@ -86,7 +81,7 @@ export default function PlayerForm({ onFormSubmit }) {
       <input type="checkbox" id="consent-checkbox" required>
       <label for="consent-checkbox">Li e concedo meu consentimento de forma livre e esclarecida ao uso dos meus dados pessoais de acordo com o <a href="terms.html" target="_blank">termo de uso de dados</a></label>
     </div>
-    <button type="submit" id="submit-button" disabled>Continuar</button>
+    <button type="submit" id="submit-button" disabled></button>
   `;
 
   const submitButton = form.querySelector('#submit-button');

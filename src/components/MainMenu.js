@@ -31,7 +31,7 @@ export default function MainMenu({ onStartGame }) {
     <p><strong>Isto NÃO é um teste comportamental ou vocacional.</strong></p>
     <p>O conteúdo é puramente para entretenimento e não deve ser levado como uma avaliação séria da sua personalidade ou aptidão, ok?</p>
     <p>Agora sim, divirta-se!</p>
-    <button id="start-game">Entendi!</button>
+    <button id="start-game"></button>
     <p>O conteúdo a seguir foi feito para a disciplina de Informática e Sociedade</p>
   `;
 

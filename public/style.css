@@ -14,15 +14,30 @@ body {
     align-items: center;
 }
 
+#app button {
+    background-color: transparent !important;
+    background-image: url('/assets/continuar.png');
+    background-size: 120% auto;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    padding: 1rem;
+    width: 150px;
+    height: 60px;
+    user-select: none;
+}
+
+#app button:disabled {
+    opacity: 50%;
+}
+
 #start-screen {
     width: 100dvw;
     height: 100dvh;
     background-image: url('/assets/start-menu.jpeg');
-    background-size: cover;
-    background-position: center;
-    background-size: auto auto;
+    background-size: auto 80%;
     background-repeat: no-repeat; 
-    background-position: center center;
+    background-position: center;
     cursor: pointer;
     position: absolute;
     top: 0;
