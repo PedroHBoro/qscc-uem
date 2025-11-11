@@ -89,7 +89,7 @@ export class Game {
             this.handleAnswer(1);
           }
         });
-      } else {
+      } else if (this.topZone || this.bottomZone) {
         this.countdownUI.stop();
       }
     });

@@ -75,7 +75,7 @@ export default function PlayerForm({ onFormSubmit }) {
     </div>
     <div>
       <label for="player-age">Idade:</label>
-      <input type="number" id="player-age" required>
+      <input type="number" id="player-age" min="0" max="100" required>
     </div>
     <div class="consent-container">
       <input type="checkbox" id="consent-checkbox" required>
